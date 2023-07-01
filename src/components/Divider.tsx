@@ -7,12 +7,16 @@ export default function Divider() {
   const panesContext = useContext(PanesContext);
   return (
     <div
-      className={cn("relative w-[9px] cursor-col-resize bg-black")}
+      className={cn(
+        " flex w-3 cursor-col-resize items-center  justify-center border border-slate-800 bg-black"
+      )}
       onMouseDown={panesContext?.mouseHoldDownHandler}
     >
-      <div className="absolute bottom-[45%] left-0 top-[45%] rounded border border-white" />
-      <div className="absolute bottom-[45%] right-0 top-[45%] rounded border border-white" />
-      <div className="absolute  bottom-[48%] left-1/2 top-[48%] -translate-x-[1px] rounded border border-white" />
+      <div>
+        <div className="my-3 h-1 w-1 rounded-full bg-slate-200" />
+        <div className="my-3 h-1 w-1 rounded-full bg-slate-200" />
+        <div className="my-3 h-1 w-1 rounded-full bg-slate-200" />
+      </div>
     </div>
   );
 }

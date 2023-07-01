@@ -1,5 +1,7 @@
 import "./globals.css";
+import { ThemeProvider } from "@/components/ThemeProvider";
 import { Roboto } from "next/font/google";
+import { cn } from "@/utils/classNames";
 
 const roboto = Roboto({ weight: "500", subsets: ["latin"] });
 
@@ -15,7 +17,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={roboto.className}>{children}</body>
+      <body className={cn(roboto.className, "overflow-hidden")}>
+        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
+          {children}
+        </ThemeProvider>
+      </body>
     </html>
   );
 }

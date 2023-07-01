@@ -1,3 +1,6 @@
+// TODO: Add dynamic window resizing
+// TODO: Add animated resizing on submit
+
 "use client";
 import React, { useContext, useEffect, useRef } from "react";
 import { PanesContext } from "@/store/PanesContext";
@@ -14,7 +17,7 @@ export default function LeftPane({ className, children }: Props) {
 
   useEffect(() => {
     if (!panesContext?.clientWidth) {
-      panesContext?.setClientWidth((topRef?.current?.clientWidth ?? 0) * 1.8);
+      panesContext?.setClientWidth(topRef?.current?.clientWidth ?? 0);
       return;
     }
 
@@ -25,7 +28,13 @@ export default function LeftPane({ className, children }: Props) {
   }, [panesContext?.clientWidth]);
 
   return (
-    <div className={cn("flex-grow overflow-hidden", className)} ref={topRef}>
+    <div
+      className={cn(
+        "w-2/3 overflow-x-hidden overflow-y-scroll px-10 py-5",
+        className
+      )}
+      ref={topRef}
+    >
       {children}
     </div>
   );
