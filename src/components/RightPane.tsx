@@ -8,6 +8,10 @@ type Props = {
 
 export default function RightPane({ className, children }: Props) {
   return (
-    <div className={cn("flex-grow overflow-hidden", className)}>{children}</div>
+    <div
+      className={cn("flex-grow overflow-x-hidden overflow-y-scroll", className)}
+    >
+      {children}
+    </div>
   );
 }
