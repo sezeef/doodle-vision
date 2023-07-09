@@ -8,7 +8,7 @@ export default function Divider() {
   return (
     <div
       className={cn(
-        " flex w-3 cursor-col-resize items-center  justify-center border border-slate-800 bg-black"
+        " flex w-3 cursor-col-resize items-center  justify-center border-l border-r border-slate-800 bg-black"
       )}
       onMouseDown={panesContext?.mouseHoldDownHandler}
     >

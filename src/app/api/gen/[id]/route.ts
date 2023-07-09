@@ -10,6 +10,7 @@ export async function GET(
       Authorization: `Token ${API_TOKEN}`,
       "Content-Type": "application/json",
     },
+    cache: "no-cache",
   });
 
   const prediction = await response.json();

@@ -1,9 +1,8 @@
 // TODO: make a modal to show images in full size on click
-// TODO: styling and ratios on different width's / screen width
 
 "use client";
 import React, { useContext, useEffect, useState } from "react";
-import Image from "next/image";
+// import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { OutputContext } from "@/store/OutputContext";
 import { Progress } from "./ui/progress";
@@ -13,7 +12,6 @@ type Props = {};
 export default function Results({}: Props) {
   const outputState = useContext(OutputContext);
   const output = outputState?.output;
-  console.log(output?.progress);
 
   return (
     <div>
@@ -27,7 +25,7 @@ export default function Results({}: Props) {
         {output?.urls && output?.size && output?.progress === 100 && (
           <div className="grid  grid-cols-2 gap-2 px-4">
             {output.urls.map((url) => (
-              <Image
+              <img
                 src={url}
                 alt="output"
                 width={parseInt(output.size, 10) ?? 0}

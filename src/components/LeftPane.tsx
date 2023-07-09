@@ -5,6 +5,7 @@
 import React, { useContext, useEffect, useRef } from "react";
 import { PanesContext } from "@/store/PanesContext";
 import { cn } from "@/utils/classNames";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 type Props = {
   className?: string;
@@ -28,14 +29,8 @@ export default function LeftPane({ className, children }: Props) {
   }, [panesContext?.clientWidth]);
 
   return (
-    <div
-      className={cn(
-        "w-2/3 overflow-x-hidden overflow-y-scroll px-10 py-5",
-        className
-      )}
-      ref={topRef}
-    >
+    <ScrollArea className={cn(className)} ref={topRef}>
       {children}
-    </div>
+    </ScrollArea>
   );
 }

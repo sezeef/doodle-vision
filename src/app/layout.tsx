@@ -6,8 +6,8 @@ import { cn } from "@/utils/classNames";
 const roboto = Roboto({ weight: "500", subsets: ["latin"] });
 
 export const metadata = {
-  title: "Scribble Art",
-  description: "Scribble art ai art generator",
+  title: "Doodle Vision",
+  description: "Turn your doodles into art",
 };
 
 export default function RootLayout({
@@ -16,7 +16,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className={cn(roboto.className, "overflow-hidden")}>
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
           {children}

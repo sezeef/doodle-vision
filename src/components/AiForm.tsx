@@ -1,11 +1,8 @@
-// TODO: fix width
-// TODO: fix canvas width
-// TODO: add canvas size selector
-// TODO: add canvas stroke width selector
-// TODO: add clear canvas button
-// TODO: add invert canvas button
-// TODO: make sure canvas is mobile accessible
-// TODO: make this comopnent responsive and above the results component
+// TODO: make a toggle for the seed input
+// TODO: add eta, n_prompt and a_prompt
+// TODO: on wide width make it a 2 column layout
+// TODO: add a gen button somewhere near the top
+// TODO: add a scroll to top hovering button
 
 "use client";
 
@@ -32,7 +29,7 @@ import { extractProgress } from "@/utils/parseLogs";
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
 const formSchema = z.object({
-  prompt: z.string().max(200).optional(),
+  prompt: z.string().max(600).optional(),
   num_samples: z.enum(["1", "2", "3", "4"], {
     required_error: "You need to select a Number of samples.",
   }),
@@ -60,13 +57,14 @@ export default function AiForm({}: Props) {
     defaultValues: {
       prompt: "",
       num_samples: "1",
-      image_resolution: "256",
-      dimm_steps: 1,
-      scale: 1,
+      image_resolution: "512",
+      dimm_steps: 20,
+      scale: 9,
       seed: Math.floor(Math.random() * 1000000),
-      eta: 0,
-      a_prompt: "",
-      n_prompt: "",
+      // eta: 0,
+      a_prompt: "best quality, extremely detailed",
+      n_prompt:
+        "longbody, lowres, bad anatomy, bad hands, missing fingers, extra digit, fewer digits, cropped, worst quality, low quality",
     },
   });
 
@@ -97,10 +95,14 @@ export default function AiForm({}: Props) {
 
     const outputId = resJson.outputId;
 
-    let i = 0;
-    //! -------------------------------------------------------------------------------
+    if (!setOutput) return;
+    setOutput({
+      progress: 0,
+      size: aiInputs.image_resolution,
+      urls: [],
+    });
+
     while (resJson.status !== "succeeded" && resJson.status !== "failed") {
-      console.log("entering loop " + i);
       await sleep(500);
       const res2 = await fetch("/api/gen/" + outputId, {
         cache: "no-cache",
@@ -114,34 +116,30 @@ export default function AiForm({}: Props) {
         return;
       }
 
-      console.log({ resJson });
-      console.log("exiting loop " + i);
-      ++i;
-      // setPrediction(resJson);
-      if (!setOutput) throw Error();
       setOutput({
         progress: extractProgress(resJson.logs) ?? 0,
         size: aiInputs.image_resolution,
         urls: [],
       });
     }
-
-    if (!setOutput) throw Error();
+    console.log(resJson.output);
     setOutput({
       progress: extractProgress(resJson.logs) ?? 100,
       size: aiInputs.image_resolution,
       urls: resJson.output,
     });
-    //! -------------------------------------------------------------------------------
   }
 
   return (
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="mt-10 w-2/3 space-y-8"
+        className="mb-24 mt-8 min-w-[512px] space-y-8 px-4"
       >
-        <Canvas ref={canvasRef} />
+        <div className="flex w-full justify-center">
+          <Canvas ref={canvasRef} className="overflow-hidden rounded-lg" />
+          {/* <DrawingCanvas /> */}
+        </div>
         <FormField
           control={form.control}
           name="prompt"
@@ -244,7 +242,7 @@ export default function AiForm({}: Props) {
           render={({ field }) => (
             <FormItem>
               <FormLabel>Dimm Steps</FormLabel>
-              <FormControl>
+              <FormControl className="w-28">
                 <Input
                   type="number"
                   {...form.register("dimm_steps", {
@@ -263,7 +261,7 @@ export default function AiForm({}: Props) {
           render={({ field }) => (
             <FormItem>
               <FormLabel>Scale</FormLabel>
-              <FormControl>
+              <FormControl className="w-28">
                 <Input
                   type="number"
                   {...form.register("scale", {
@@ -282,7 +280,7 @@ export default function AiForm({}: Props) {
           render={({ field }) => (
             <FormItem>
               <FormLabel>Seed</FormLabel>
-              <FormControl>
+              <FormControl className="w-40">
                 <Input
                   type="number"
                   {...form.register("seed", {
