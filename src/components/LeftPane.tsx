@@ -29,7 +29,13 @@ export default function LeftPane({ className, children }: Props) {
   }, [panesContext?.clientWidth]);
 
   return (
-    <ScrollArea className={cn(className)} ref={topRef}>
+    <ScrollArea
+      className={cn(
+        "w-2/3 bg-constellation-light dark:bg-constellation-dark",
+        className
+      )}
+      ref={topRef}
+    >
       {children}
     </ScrollArea>
   );
