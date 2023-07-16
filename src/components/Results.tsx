@@ -1,8 +1,8 @@
 // TODO: make a modal to show images in full size on click
 
 "use client";
-import React, { useContext, useEffect, useState } from "react";
-// import Image from "next/image";
+import React, { useContext} from "react";
+import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { OutputContext } from "@/store/OutputContext";
 import { Progress } from "./ui/progress";
@@ -22,11 +22,12 @@ export default function Results({}: Props) {
           output.progress < 100 && (
             <Progress value={output.progress} className="w-2/3" />
           )}
-        {output?.urls && output?.size && output?.progress === 100 && (
+        {(output?.urls && output?.size && output?.progress === 100) && (
           <div className="grid  grid-cols-2 gap-2 px-4">
             {output.urls.map((url) => (
-              <img
+              <Image
                 src={url}
+                key={url}
                 alt="output"
                 width={parseInt(output.size, 10) ?? 0}
                 height={parseInt(output.size, 10) ?? 0}

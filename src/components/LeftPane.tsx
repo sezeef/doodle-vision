@@ -26,7 +26,7 @@ export default function LeftPane({ className, children }: Props) {
       topRef.current.style.minWidth = panesContext?.clientWidth + "px";
       topRef.current.style.maxWidth = panesContext?.clientWidth + "px";
     }
-  }, [panesContext?.clientWidth]);
+  }, [panesContext]);
 
   return (
     <ScrollArea
