@@ -16,6 +16,9 @@ module.exports = {
       },
     },
     extend: {
+      fontFamily: {
+        roboto: ['Roboto', 'sans-serif']
+      },
       backgroundImage: {
         "constellation-dark": "url('/endless-constellation-dark.svg')",
         "constellation-light": "url('/endless-constellation-light.svg')",
